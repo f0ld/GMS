@@ -35,7 +35,7 @@ Built for university students dealing with flaky campus Wi-Fi who want to keep a
   echo "config.json" >> .gitignore
 ```
 
-Create a file named config.json in the exact same directory as your Python script and add your credentials and target URL (there is a provided example. YOu just need to enter your data before running the script)
+Create a file named config.json in the exact same directory as your Python script and add your credentials and target URL (Or just use the provided example. You just need to enter your data before running the script)
 
 ## Usage
 Run the script from your terminal:
