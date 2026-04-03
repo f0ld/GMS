@@ -44,5 +44,5 @@ python3 gms.py
 ```
 (this command assumes you are at the path of the script)
 
-## Disclaimer
+## 📜Disclaimer
 Please ensure you have permission from your professor or the copyright holder to download and store the course materials offline. This tool is meant for personal educational use and offline studying only.
