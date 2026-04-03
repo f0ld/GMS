@@ -64,7 +64,7 @@ def main():
         for pdf in pdf_files:
             merger.append(pdf)
 
-        final_filename = "MyScript_Komplett.pdf"
+        final_filename = config["final_filename"]
         merger.write(final_filename)
         merger.close()
 
