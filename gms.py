@@ -58,8 +58,27 @@ def main():
 
         browser.close()
 
+        print("\nMerging PDFs...")
+        merger = PdfWriter()
+        for pdf in pdf_files:
+            merger.append(pdf)
+
+        final_filename = "MyScript_Komplett.pdf"
+        merger.write(final_filename)
+        merger.close()
         
+        #CleanUp
+        print("Cleaning up temporary files...")
+        for pdf in pdf_files:
+            if os.path.exists(pdf):
+                os.remove(pdf)
+
+        print(f"Done! The entire Script was saved as: {final_filename}.")
 
 
+#ToDo: Make Filename of final merged document changeable in config.json
+#ToDo: Properly Comment my Code
+#ToDo: Add some Asserts
+#ToDo: Write a readme.md that outlines the dependency and how to use the script
 if __name__ == "__main__":
     main()
