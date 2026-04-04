@@ -17,8 +17,9 @@ Built for university students dealing with flaky campus Wi-Fi who want to keep a
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/YOUR-USERNAME/YOUR-REPO-NAME.git](https://github.com/YOUR-USERNAME/YOUR-REPO-NAME.git)
-   cd YOUR-REPO-NAME
+   git clone https://github.com/f0ld/GMS.git
+   cd GMS
+   
 
 2. ** Install the required Python packages:**
    ```bash
