@@ -1,6 +1,8 @@
 import json
 import time
 import os
+
+from certifi import contents
 from playwright.sync_api import sync_playwright
 from pypdf import PdfWriter
 
@@ -35,6 +37,22 @@ def main():
             while True:
                 page.wait_for_load_state("networkidle") #Wait for everything to load because the Math Stuff needs bandwidth
                 time.sleep(0.5) #Short Buffer to wait for JavasSript-Render (maybe needs an increase...)
+
+                #making sure there is no content over the page break...
+                page.add_style_tag(content="""
+                @media print {
+                    img, figure, table, pre, code, .math, .admonition {
+                        break-inside: avoid !important;
+                        page-break-inside: avoid !important; 
+                    }
+                    h1, h2, h3 {
+                        break-after: avoid !important;
+                        page-break-after: avoid !important;
+                    }
+                }
+                """
+                )
+
 
                 #Save Page as PDF
                 pdf_filename = f"temp_page_{page_num:03d}.pdf"
@@ -79,9 +97,7 @@ def main():
         print(f"Done! The entire Script was saved as: {final_filename}.")
 
 
-#ToDo: Make Filename of final merged document changeable in config.json
 #ToDo: Properly Comment my Code
 #ToDo: Add some Asserts
-#ToDo: Write a readme.md that outlines the dependency and how to use the script
 if __name__ == "__main__":
     main()
