@@ -16,6 +16,8 @@ def main():
         config = load_config()
         start_url = config["start_url"]
 
+        final_filename = config.get("final_filename", "MyScript.pdf")
+
         pdf_files = [] #This will save the temporary pdf files later on
         page_num = 1
 
@@ -35,8 +37,18 @@ def main():
             page.goto(start_url)
 
             while True:
-                page.wait_for_load_state("networkidle") #Wait for everything to load because the Math Stuff needs bandwidth
-                time.sleep(0.5) #Short Buffer to wait for JavasSript-Render (maybe needs an increase...)
+                page.wait_for_load_state("load") #Wait only for basic HTML/Images to load (if final pdf isnt fully
+                                                 #rendered use "networkidle" instead of "load")
+
+                #seach for next page button (might need to check if MySt standard classes are used)
+                next_button = page.locator("a.myst-footer-link-next").first
+
+                try:
+                    next_button.wait_for(state="visible", timeout=3000)
+                except Exception:
+                    pass
+
+                time.sleep(0.5)  # Short Buffer to wait for JavasSript-Render (maybe needs an increase...)
 
                 #making sure there is no content over the page break...
                 page.add_style_tag(content="""
@@ -65,8 +77,9 @@ def main():
                 pdf_files.append(pdf_filename)
                 print(f"Saved: Page {page_num} ({page.url}")
 
-                #seach for next page button (might need to check if MySt standard classes are used)
-                next_button = page.locator("a.myst-footer-link-next").first
+
+
+
                 if next_button.count() > 0 and next_button.is_visible():
                     print("Jumping to next page...")
                     next_button.click()
@@ -82,7 +95,7 @@ def main():
         for pdf in pdf_files:
             merger.append(pdf)
 
-        final_filename = config["final_filename"]
+       # final_filename = config["final_filename"]
         merger.write(final_filename)
         merger.close()
 
